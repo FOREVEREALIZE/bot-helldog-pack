@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const Client = new Discord.Client();
 var prefix = "!";
+var today = new Date();
+var time = today.getHours + ":" + today.getMinutes;
 
 Client.on("ready", () => {
   console.log("El bot ha iniciado sesión con exito como: " + Client.user);
@@ -30,12 +32,13 @@ Client.on("message", msg => {
       }
   } else if (msg.content === "prefix") {
     msg.channel.send(prefix);
+  } else if (msg.content.substring(prefix.length, prefix.length + 7) === "refresh") {
+    Client.login(process.env.BOT_TOKEN);
+    msg.channel.send("Refrescado con exito!")
+  } else if (msg.content.substring(prefix.length, prefix.length + 4) === "test") {
+    msg.guild.channels.get("715884048446259260").send("@everyone hemos puesto en funcionamiento un bot para el servidor, ahora es posible pedir un rol elegible con !pedirRol <nombre del rol>, en el futuro se añadiran mas funciones, gracias.");
+    msg.guild.channels.get("720663623319552041").send("Ha salido la 1.0 del bot!\nSe ha añadido el comando pedirRol.\nUso: !pedirRol <nombre del rol>\nLista de roles a elegir: #info");
   }
-});
-
-Client.on('guildCreate', guild => {
-  Client.channel.get("715884048446259260").send("@everyone hemos puesto en funcionamiento un bot para el servidor, ahora es posible pedir un rol elegible con !pedirRol <nombre del rol>, en el futuro se añadiran mas funciones, gracias.");
-  Client.channel.get("720663623319552041").send("@everyone ha salido la 1.0 del bot!\nse a añadido el comando pedirRol.\nUso: !pedirRol <nombre del rol>\nLista de roles a elegir: #info");
 });
 
 Client.login(process.env.BOT_TOKEN);
