@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const Client = new Discord.Client();
-var prefix = "t!";
+var prefix = "!";
 var today = new Date();
 var time = today.getHours + ":" + today.getMinutes;
 
