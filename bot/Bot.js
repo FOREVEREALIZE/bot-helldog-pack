@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const Client = new Discord.Client();
-var prefix = "!";
+var prefix = "t!";
 var today = new Date();
 var time = today.getHours + ":" + today.getMinutes;
 
@@ -37,17 +37,27 @@ Client.on("message", msg => {
     wait(10000);
     Client.login(process.env.BOT_TOKEN);
     msg.channel.send("Refrescado con exito!");
-  } else if (msg.content.substring(prefix.length, prefix.length + 9).toLowerCase() === "anunciar" && msg.author.guild.hasPermission("ADMINISTRATOR")) {
-    msg.guild.channels.get("715884048446259260").send(msg.content.substring(prefix.length + 10, msg.content.length));
+  } else if (msg.content.substring(prefix.length, prefix.length + 8).toLowerCase() === "anunciar") {
+    if (msg.member.hasPermission("ADMINISTRATOR")) {
+      if (msg.content.substring(prefix.length + 10, msg.content.length) != "") {
+        msg.react("✅");
+        msg.guild.channels.get("715884048446259260").send("@everyone, " + msg.content.substring(prefix.length + 9, msg.content.length));
+      } else {
+        msg.react("❌");
+        msg.reply("no has escrito ningún anuncio!");
+      }
+    } else if (msg.content.substring(prefix.length, prefix.length + 12).toLowerCase() === "anunciarOtro") {
+      if (msg.member.hasPermission("ADMINISTRATOR")) {
+        if (msg.content.substring(prefix.length + 14, msg.content.length) != "") {
+          msg.react("✅");
+          msg.guild.channels.get("715884048446259260").send("@everyone, " + msg.content.substring(prefix.length + 13, msg.content.length));
+        } else {
+          msg.react("❌");
+          msg.reply("no has escrito ningún anuncio!");
+        }
+      }
+    }
   }
-});
-
-Client.on('guildCreate', guild => {
-  while (time != "18:00") {
-    var time = today.getHours + ":" + today.getMinutes;
-  }
-  guild.channels.get("715884048446259260").send("@everyone hemos puesto en funcionamiento un bot para el servidor, ahora es posible pedir un rol elegible con !pedirRol <nombre del rol>, en el futuro se añadiran mas funciones, gracias.");
-  guild.channels.get("720663623319552041").send("Ha salido la 1.0 del bot!\nSe ha añadido el comando pedirRol.\nUso: !pedirRol <nombre del rol>\nLista de roles a elegir: #info");
 });
 
 function wait(ms) {
