@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const Client = new Discord.Client();
-var prefix = "!";
+var prefix = "t!";
 var today = new Date();
 var time = today.getHours + ":" + today.getMinutes;
 
@@ -36,7 +36,6 @@ Client.on("message", msg => {
     Client.destroy();
     wait(10000);
     Client.login(process.env.BOT_TOKEN);
-    wait(2000);
     msg.channel.send("Refrescado con exito!");
   } else if (msg.content.substring(prefix.length, prefix.length + 8).toLowerCase() === "anunciar") {
     if (msg.member.hasPermission("ADMINISTRATOR")) {
@@ -47,9 +46,16 @@ Client.on("message", msg => {
         msg.react("❌");
         msg.reply("no has escrito ningún anuncio!");
       }
-    } else {
-      msg.react("❌");
-      msg.reply("no tienes permiso para usar este comando!");
+    } else if (msg.content.substring(prefix.length, prefix.length + 12).toLowerCase() === "anunciarOtro") {
+      if (msg.member.hasPermission("ADMINISTRATOR")) {
+        if (msg.content.substring(prefix.length + 14, msg.content.length) != "") {
+          msg.react("✅");
+          msg.guild.channels.get("715884048446259260").send("@everyone, " + msg.content.substring(prefix.length + 13, msg.content.length));
+        } else {
+          msg.react("❌");
+          msg.reply("no has escrito ningún anuncio!");
+        }
+      }
     }
   }
 });
