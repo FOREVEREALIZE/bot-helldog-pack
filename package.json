@@ -10,7 +10,7 @@
     "discord.js": "^11.6.4",
     "node-opus": "^0.2.9",
     "node.js": "0.0.1-security",
-    "npm": "^6.14.5",
+    "npm": "^6.14.6",
     "uws": "^9.148.0"
   },
   "engines": {
